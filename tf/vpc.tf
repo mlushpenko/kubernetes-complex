@@ -22,3 +22,14 @@ resource "aws_vpc" "blue" {
     }
 }
 
+resource "aws_vpc_peering_connection" "blue-prod" {
+  peer_owner_id = "146223805486"
+  peer_vpc_id   = "${aws_vpc.prod.id}"
+  vpc_id        = "${aws_vpc.blue.id}"
+  auto_accept   = true
+
+  tags {
+    Name = "blue-prod"
+    "kpn" = "itv"
+  }
+}
