@@ -2,7 +2,7 @@ resource "aws_route_table" "prod" {
     vpc_id     = "vpc-70411e16"
 
     route {
-        cidr_block = "30.0.11.9/32" # proxy server IP which is located in
+        cidr_block = "${aws_instance.proxy.private_ip}/32" # proxy server IP which is located in
         vpc_peering_connection_id = "pcx-bc43b2d4"
     }
 

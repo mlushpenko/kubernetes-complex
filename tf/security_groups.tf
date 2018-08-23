@@ -171,7 +171,7 @@ resource "aws_security_group" "vpc-207b2446-proxy" {
         from_port       = 8888
         to_port         = 8888
         protocol        = "tcp"
-        cidr_blocks     = ["0.0.0.0/0"]
+        cidr_blocks     = ["20.0.0.0/16", "30.0.16.0/20"]
         description     = "HTTP proxy access"
     }
 

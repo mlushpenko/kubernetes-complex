@@ -2,7 +2,7 @@ resource "aws_elb" "elb-k8s" {
     name                        = "elb-k8s"
     subnets                     = ["subnet-62b56138"]
     security_groups             = ["sg-018134aa840a6c9e1"]
-    instances                   = ["i-002f93638cadcc2ae"]
+    instances                   = ["${aws_instance.master.*.id}"]
     cross_zone_load_balancing   = false
     idle_timeout                = 60
     connection_draining         = true
