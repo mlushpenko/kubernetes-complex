@@ -1,7 +1,7 @@
 resource "aws_elb" "elb-k8s" {
     name                        = "elb-k8s"
-    subnets                     = ["subnet-62b56138"]
-    security_groups             = ["sg-018134aa840a6c9e1"]
+    subnets                     = ["${aws_subnet.subnet-62b56138-orange.id}"]
+    security_groups             = ["${aws_security_group.elb-k8s.id}","${aws_security_group.basic-blue.id}"]
     instances                   = ["${aws_instance.master.*.id}"]
     cross_zone_load_balancing   = false
     idle_timeout                = 60

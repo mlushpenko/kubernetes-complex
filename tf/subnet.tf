@@ -1,7 +1,6 @@
-resource "aws_subnet" "subnet-30b92d56-lb-backup" {
-    vpc_id                  = "vpc-207b2446"
-    cidr_block              = "30.0.32.0/20"
-    availability_zone       = "eu-west-1b"
+resource "aws_subnet" "lb-backup" {
+    vpc_id                  = "${aws_vpc.blue.id}"
+    cidr_block              = "30.0.48.0/20"
     map_public_ip_on_launch = false
 
     tags {
@@ -10,34 +9,42 @@ resource "aws_subnet" "subnet-30b92d56-lb-backup" {
     }
 }
 
-resource "aws_subnet" "subnet-2ebd6974-red" {
-    vpc_id                  = "vpc-207b2446"
+resource "aws_subnet" "blue-red" {
+    vpc_id                  = "${aws_vpc.blue.id}"
     cidr_block              = "30.0.0.0/20"
-    availability_zone       = "eu-west-1a"
     map_public_ip_on_launch = false
 
     tags {
-        "Name" = "red"
+        "Name" = "blue-red"
         "kpn" = "itv"
     }
 }
 
 resource "aws_subnet" "subnet-62b56138-orange" {
-    vpc_id                  = "vpc-207b2446"
+    vpc_id                  = "${aws_vpc.blue.id}"
     cidr_block              = "30.0.16.0/20"
-    availability_zone       = "eu-west-1a"
     map_public_ip_on_launch = false
 
     tags {
         "kpn" = "itv"
-        "Name" = "orange"
+        "Name" = "blue-orange"
     }
 }
 
-resource "aws_subnet" "subnet-red-blue" {
-    vpc_id                  = "vpc-70411e16"
-    cidr_block              = "20.0.32.0/20"
-    availability_zone       = "eu-west-1a"
+resource "aws_subnet" "blue-green" {
+    vpc_id                  = "${aws_vpc.blue.id}"
+    cidr_block              = "30.0.32.0/20"
+    map_public_ip_on_launch = false
+
+    tags {
+        "Name" = "blue-green"
+        "kpn" = "itv"
+    }
+}
+
+resource "aws_subnet" "red-blue" {
+    vpc_id                  = "${aws_vpc.prod.id}"
+    cidr_block              = "20.0.0.0/20"
     map_public_ip_on_launch = false
 
     tags {
@@ -46,10 +53,9 @@ resource "aws_subnet" "subnet-red-blue" {
     }
 }
 
-resource "aws_subnet" "subnet-b58e5aef-orange-blue" {
-    vpc_id                  = "vpc-70411e16"
-    cidr_block              = "20.0.0.0/20"
-    availability_zone       = "eu-west-1a"
+resource "aws_subnet" "orange-blue" {
+    vpc_id                  = "${aws_vpc.prod.id}"
+    cidr_block              = "20.0.16.0/20"
     map_public_ip_on_launch = false
 
     tags {
@@ -58,10 +64,9 @@ resource "aws_subnet" "subnet-b58e5aef-orange-blue" {
     }
 }
 
-resource "aws_subnet" "subnet-green-blue" {
-    vpc_id                  = "vpc-70411e16"
-    cidr_block              = "20.0.16.0/20"
-    availability_zone       = "eu-west-1a"
+resource "aws_subnet" "green-blue" {
+    vpc_id                  = "${aws_vpc.prod.id}"
+    cidr_block              = "20.0.32.0/20"
     map_public_ip_on_launch = false
 
     tags {
@@ -70,10 +75,9 @@ resource "aws_subnet" "subnet-green-blue" {
     }
 }
 
-resource "aws_subnet" "subnet-red-prod" {
-    vpc_id                  = "vpc-70411e16"
+resource "aws_subnet" "red-prod" {
+    vpc_id                  = "${aws_vpc.prod.id}"
     cidr_block              = "20.0.48.0/20"
-    availability_zone       = "eu-west-1a"
     map_public_ip_on_launch = false
 
     tags {
@@ -82,10 +86,9 @@ resource "aws_subnet" "subnet-red-prod" {
     }
 }
 
-resource "aws_subnet" "subnet-orange-prod" {
-    vpc_id                  = "vpc-70411e16"
+resource "aws_subnet" "orange-prod" {
+    vpc_id                  = "${aws_vpc.prod.id}"
     cidr_block              = "20.0.64.0/20"
-    availability_zone       = "eu-west-1a"
     map_public_ip_on_launch = false
 
     tags {
@@ -94,10 +97,9 @@ resource "aws_subnet" "subnet-orange-prod" {
     }
 }
 
-resource "aws_subnet" "subnet-green-prod" {
-    vpc_id                  = "vpc-70411e16"
+resource "aws_subnet" "green-prod" {
+    vpc_id                  = "${aws_vpc.prod.id}"
     cidr_block              = "20.0.80.0/20"
-    availability_zone       = "eu-west-1a"
     map_public_ip_on_launch = false
 
     tags {

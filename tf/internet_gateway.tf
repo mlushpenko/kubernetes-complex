@@ -1,5 +1,5 @@
 resource "aws_internet_gateway" "internet" {
-    vpc_id = "vpc-207b2446"
+    vpc_id = "${aws_vpc.blue.id}"
 
     tags {
         "kpn" = "itv"
