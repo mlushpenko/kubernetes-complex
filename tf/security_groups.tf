@@ -171,7 +171,7 @@ resource "aws_security_group" "proxy" {
         from_port       = 8888
         to_port         = 8888
         protocol        = "tcp"
-        cidr_blocks     = ["${aws_vpc.prod.cidr_block}", "${aws_subnet.subnet-62b56138-orange.cidr_block}"]
+        cidr_blocks     = ["${aws_vpc.prod.cidr_block}", "${aws_subnet.blue-orange.cidr_block}"]
         description     = "HTTP proxy access"
     }
 
@@ -198,7 +198,7 @@ resource "aws_security_group" "kube-node" {
         from_port       = 10250
         to_port         = 10250
         protocol        = "tcp"
-        cidr_blocks     = ["${aws_subnet.subnet-62b56138-orange.cidr_block}"]
+        cidr_blocks     = ["${aws_subnet.blue-orange.cidr_block}"]
         description     = "kube-api to kubelet"
     }
 
@@ -206,7 +206,7 @@ resource "aws_security_group" "kube-node" {
         from_port       = 179
         to_port         = 179
         protocol        = "tcp"
-        cidr_blocks     = ["${aws_subnet.subnet-62b56138-orange.cidr_block}"]
+        cidr_blocks     = ["${aws_subnet.blue-orange.cidr_block}"]
         description     = "Calico BGP protocol"
     }
 
@@ -214,7 +214,7 @@ resource "aws_security_group" "kube-node" {
         from_port       = 0
         to_port         = 0
         protocol        = "4"
-        cidr_blocks     = ["${aws_subnet.subnet-62b56138-orange.cidr_block}"]
+        cidr_blocks     = ["${aws_subnet.blue-orange.cidr_block}"]
         description     = "Calico IPIP"
     }
 

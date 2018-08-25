@@ -10,6 +10,7 @@ resource "aws_nat_gateway" "proxy" {
     allocation_id = "${aws_eip.nat.id}"
     subnet_id = "${aws_subnet.blue-red.id}"
     tags {
+        Name  = "forward-proxy"
         "kpn" = "itv"
     }
 

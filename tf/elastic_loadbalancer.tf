@@ -1,6 +1,6 @@
 resource "aws_elb" "elb-k8s" {
     name                        = "elb-k8s"
-    subnets                     = ["${aws_subnet.subnet-62b56138-orange.id}"]
+    subnets                     = ["${aws_subnet.blue-orange.id}"]
     security_groups             = ["${aws_security_group.elb-k8s.id}","${aws_security_group.basic-blue.id}"]
     instances                   = ["${aws_instance.master.*.id}"]
     cross_zone_load_balancing   = false

@@ -1,6 +1,6 @@
 resource "aws_network_acl" "kube-master" {
     vpc_id     = "${aws_vpc.blue.id}"
-    subnet_ids = ["${aws_subnet.subnet-62b56138-orange.id}"]
+    subnet_ids = ["${aws_subnet.blue-orange.id}"]
 
     ingress {
         from_port  = 0
@@ -249,7 +249,7 @@ resource "aws_network_acl" "public" {
         rule_no    = 120
         action     = "allow"
         protocol   = "6"
-        cidr_block = "${aws_subnet.subnet-62b56138-orange.cidr_block}"
+        cidr_block = "${aws_subnet.blue-orange.cidr_block}"
     }
 
     ingress {
@@ -258,7 +258,7 @@ resource "aws_network_acl" "public" {
         rule_no    = 130
         action     = "allow"
         protocol   = "6"
-        cidr_block = "${aws_subnet.subnet-62b56138-orange.cidr_block}"
+        cidr_block = "${aws_subnet.blue-orange.cidr_block}"
     }
 
     ingress {
@@ -287,7 +287,7 @@ resource "aws_network_acl" "public" {
         rule_no    = 120
         action     = "allow"
         protocol   = "6"
-        cidr_block = "${aws_subnet.subnet-62b56138-orange.cidr_block}"
+        cidr_block = "${aws_subnet.blue-orange.cidr_block}"
     }
 
     egress {
@@ -314,7 +314,7 @@ resource "aws_network_acl" "public" {
         rule_no    = 150
         action     = "allow"
         protocol   = "6"
-        cidr_block = "${aws_subnet.subnet-62b56138-orange.cidr_block}"
+        cidr_block = "${aws_subnet.blue-orange.cidr_block}"
     }
 
     egress {
@@ -342,7 +342,7 @@ resource "aws_network_acl" "kube-node" {
         rule_no    = 100
         action     = "allow"
         protocol   = "1"
-        cidr_block = "${aws_subnet.subnet-62b56138-orange.cidr_block}"
+        cidr_block = "${aws_subnet.blue-orange.cidr_block}"
         icmp_code  = "-1"
         icmp_type  = "-1"
     }
@@ -353,7 +353,7 @@ resource "aws_network_acl" "kube-node" {
         rule_no    = 110
         action     = "allow"
         protocol   = "6"
-        cidr_block = "${aws_subnet.subnet-62b56138-orange.cidr_block}"
+        cidr_block = "${aws_subnet.blue-orange.cidr_block}"
     }
 
     ingress {
@@ -362,7 +362,7 @@ resource "aws_network_acl" "kube-node" {
         rule_no    = 120
         action     = "allow"
         protocol   = "6"
-        cidr_block = "${aws_subnet.subnet-62b56138-orange.cidr_block}"
+        cidr_block = "${aws_subnet.blue-orange.cidr_block}"
     }
 
     ingress {
@@ -371,7 +371,7 @@ resource "aws_network_acl" "kube-node" {
         rule_no    = 130
         action     = "allow"
         protocol   = "6"
-        cidr_block = "${aws_subnet.subnet-62b56138-orange.cidr_block}"
+        cidr_block = "${aws_subnet.blue-orange.cidr_block}"
     }
 
     ingress {
@@ -380,7 +380,7 @@ resource "aws_network_acl" "kube-node" {
         rule_no    = 200
         action     = "allow"
         protocol   = "6"
-        cidr_block = "${aws_subnet.subnet-62b56138-orange.cidr_block}"
+        cidr_block = "${aws_subnet.blue-orange.cidr_block}"
     }
 
     ingress {
@@ -389,7 +389,7 @@ resource "aws_network_acl" "kube-node" {
         rule_no    = 210
         action     = "allow"
         protocol   = "6"
-        cidr_block = "${aws_subnet.subnet-62b56138-orange.cidr_block}"
+        cidr_block = "${aws_subnet.blue-orange.cidr_block}"
     }
 
     ingress {
@@ -398,7 +398,7 @@ resource "aws_network_acl" "kube-node" {
         rule_no    = 220
         action     = "allow"
         protocol   = "4"
-        cidr_block = "${aws_subnet.subnet-62b56138-orange.cidr_block}"
+        cidr_block = "${aws_subnet.blue-orange.cidr_block}"
     }
 
     egress {
@@ -407,7 +407,7 @@ resource "aws_network_acl" "kube-node" {
         rule_no    = 100
         action     = "allow"
         protocol   = "1"
-        cidr_block = "${aws_subnet.subnet-62b56138-orange.cidr_block}"
+        cidr_block = "${aws_subnet.blue-orange.cidr_block}"
         icmp_code  = "-1"
         icmp_type  = "-1"
     }
@@ -418,7 +418,7 @@ resource "aws_network_acl" "kube-node" {
         rule_no    = 110
         action     = "allow"
         protocol   = "6"
-        cidr_block = "${aws_subnet.subnet-62b56138-orange.cidr_block}"
+        cidr_block = "${aws_subnet.blue-orange.cidr_block}"
     }
 
     egress {
@@ -427,7 +427,7 @@ resource "aws_network_acl" "kube-node" {
         rule_no    = 125
         action     = "allow"
         protocol   = "6"
-        cidr_block = "${aws_subnet.subnet-62b56138-orange.cidr_block}"
+        cidr_block = "${aws_subnet.blue-orange.cidr_block}"
     }
 
     egress {
@@ -436,7 +436,7 @@ resource "aws_network_acl" "kube-node" {
         rule_no    = 130
         action     = "allow"
         protocol   = "6"
-        cidr_block = "${aws_subnet.subnet-62b56138-orange.cidr_block}"
+        cidr_block = "${aws_subnet.blue-orange.cidr_block}"
     }
 
     egress {
@@ -445,7 +445,7 @@ resource "aws_network_acl" "kube-node" {
         rule_no    = 140
         action     = "allow"
         protocol   = "6"
-        cidr_block = "${aws_subnet.subnet-62b56138-orange.cidr_block}"
+        cidr_block = "${aws_subnet.blue-orange.cidr_block}"
     }
 
     egress {
@@ -454,7 +454,7 @@ resource "aws_network_acl" "kube-node" {
         rule_no    = 220
         action     = "allow"
         protocol   = "6"
-        cidr_block = "${aws_subnet.subnet-62b56138-orange.cidr_block}"
+        cidr_block = "${aws_subnet.blue-orange.cidr_block}"
     }
 
     egress {
@@ -463,7 +463,7 @@ resource "aws_network_acl" "kube-node" {
         rule_no    = 250
         action     = "allow"
         protocol   = "4"
-        cidr_block = "${aws_subnet.subnet-62b56138-orange.cidr_block}"
+        cidr_block = "${aws_subnet.blue-orange.cidr_block}"
     }
 
     egress {
@@ -472,7 +472,7 @@ resource "aws_network_acl" "kube-node" {
         rule_no    = 260
         action     = "allow"
         protocol   = "6"
-        cidr_block = "${aws_subnet.subnet-62b56138-orange.cidr_block}"
+        cidr_block = "${aws_subnet.blue-orange.cidr_block}"
     }
 
     tags {

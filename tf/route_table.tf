@@ -16,7 +16,17 @@ resource "aws_route_table" "blue-orange" {
     vpc_id     = "${aws_vpc.blue.id}"
 
     route {
+        cidr_block = "${aws_subnet.red-blue.cidr_block}"
+        vpc_peering_connection_id = "${aws_vpc_peering_connection.blue-prod.id}"
+    }
+
+    route {
         cidr_block = "${aws_subnet.orange-blue.cidr_block}"
+        vpc_peering_connection_id = "${aws_vpc_peering_connection.blue-prod.id}"
+    }
+
+    route {
+        cidr_block = "${aws_subnet.green-blue.cidr_block}"
         vpc_peering_connection_id = "${aws_vpc_peering_connection.blue-prod.id}"
     }
 
@@ -32,7 +42,7 @@ resource "aws_route_table" "blue-orange" {
 }
 
 resource "aws_route_table" "blue-green" {
-    vpc_id     = "vpc-207b2446"
+    vpc_id     = "${aws_vpc.blue.id}"
 
     tags {
         "Name" = "blue-green"
@@ -49,7 +59,7 @@ resource "aws_route_table" "prod-blue" {
     }
 
     route {
-        cidr_block = "${aws_subnet.subnet-62b56138-orange.cidr_block}"
+        cidr_block = "${aws_subnet.blue-orange.cidr_block}"
         vpc_peering_connection_id = "${aws_vpc_peering_connection.blue-prod.id}"
     }
 
@@ -66,7 +76,7 @@ resource "aws_route_table_association" "blue-red" {
 
 resource "aws_route_table_association" "blue-orange" {
     route_table_id = "${aws_route_table.blue-orange.id}"
-    subnet_id = "${aws_subnet.subnet-62b56138-orange.id}"
+    subnet_id = "${aws_subnet.blue-orange.id}"
 }
 
 resource "aws_route_table_association" "blue-orange-lb" {

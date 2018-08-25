@@ -38,11 +38,12 @@ resource "aws_instance" "proxy" {
     instance_type               = "t2.small"
     monitoring                  = false
     key_name                    = "itv"
-    subnet_id                   = "${aws_subnet.subnet-62b56138-orange.id}"
+    subnet_id                   = "${aws_subnet.blue-orange.id}"
     vpc_security_group_ids      = ["${aws_security_group.basic-blue.id}","${aws_security_group.proxy.id}"]
     associate_public_ip_address = false
     source_dest_check           = true
-    disable_api_termination     = true
+    disable_api_termination     = false
+    user_data                   = "${file("ec2_user_data/proxy.sh")}"
 
     root_block_device {
         volume_type           = "gp2"
@@ -62,7 +63,7 @@ resource "aws_instance" "master" {
     instance_type               = "t2.medium"
     monitoring                  = false
     key_name                    = "itv"
-    subnet_id                   = "${aws_subnet.subnet-62b56138-orange.id}"
+    subnet_id                   = "${aws_subnet.blue-orange.id}"
     vpc_security_group_ids      = ["${aws_security_group.basic-blue.id}", "${aws_security_group.kube-master.id}"]
     associate_public_ip_address = false
     source_dest_check           = false
@@ -81,18 +82,6 @@ resource "aws_instance" "master" {
     }
 }
 
-resource "aws_network_interface" "prod" {
-    subnet_id         = "${aws_subnet.orange-prod.id}"
-    security_groups   = ["${aws_security_group.basic-prod.id}"]
-    source_dest_check = false
-    count = "${var.workers_count}"
-    tags {
-        "Name" = "worker${count.index}-prod"
-        "kpn"  = "itv"
-        "prod-zone" = "orange"
-    }
-}
-
 resource "aws_network_interface" "blue" {
     subnet_id         = "${aws_subnet.orange-blue.id}"
     security_groups   = ["${aws_security_group.basic-prod.id}", "${aws_security_group.kube-node.id}"]
@@ -105,12 +94,33 @@ resource "aws_network_interface" "blue" {
     }
 }
 
+resource "aws_network_interface" "prod" {
+    subnet_id         = "${aws_subnet.orange-prod.id}"
+    security_groups   = ["${aws_security_group.basic-prod.id}"]
+    source_dest_check = false
+    count = "${var.workers_count}"
+    tags {
+        "Name" = "worker${count.index}-prod"
+        "kpn"  = "itv"
+        "prod-zone" = "orange"
+    }
+}
+
+data "template_file" "user_data_kube_worker" {
+  template = "${file("ec2_user_data/worker.sh")}"
+
+  vars {
+    proxy_ip   = "${aws_instance.proxy.private_ip}"
+  }
+}
+
 resource "aws_instance" "worker" {
     ami                         = "ami-7c491f05"
     ebs_optimized               = false
     instance_type               = "t2.medium"
     monitoring                  = false
     key_name                    = "itv"
+    user_data                   = "${data.template_file.user_data_kube_worker.rendered}"
 
     count = "${var.workers_count}"
 
