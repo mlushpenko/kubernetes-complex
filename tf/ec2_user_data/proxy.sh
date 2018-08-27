@@ -28,3 +28,7 @@ systemctl enable tinyproxy.service
 # Get kubernetes
 git clone https://github.com/mlushpenko/kubespray-test.git /home/ubuntu/kubespray
 chown -R ubuntu: /home/ubuntu/kubespray
+exec sudo -u ubuntu /bin/sh - << eof
+pip install --user -r /home/ubuntu/kubespray/requirements.txt
+eof
+

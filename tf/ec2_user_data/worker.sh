@@ -11,4 +11,14 @@ exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
 
 # Set up yum proxy
 sed -e "2iproxy=http://${proxy_ip}:8888" -i /etc/yum.conf
-yum update -y
+
+# Bring up production interface
+cat <<EOF > /etc/sysconfig/network-scripts/ifcfg-eth1
+BOOTPROTO=dhcp
+DEVICE=eth1
+ONBOOT=yes
+TYPE=Ethernet
+USERCTL=no
+EOF
+
+ifup eth1

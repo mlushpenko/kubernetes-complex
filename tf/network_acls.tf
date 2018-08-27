@@ -32,6 +32,15 @@ resource "aws_network_acl" "kube-master" {
     }
 
     ingress {
+        from_port  = 179
+        to_port    = 179
+        rule_no    = 131
+        action     = "allow"
+        protocol   = "6"
+        cidr_block = "${aws_subnet.red-blue.cidr_block}"
+    }
+
+    ingress {
         from_port  = 2379
         to_port    = 2379
         rule_no    = 135
@@ -41,12 +50,31 @@ resource "aws_network_acl" "kube-master" {
     }
 
     ingress {
+        from_port  = 2379
+        to_port    = 2379
+        rule_no    = 136
+        action     = "allow"
+        protocol   = "6"
+        cidr_block = "${aws_subnet.red-blue.cidr_block}"
+    }
+
+    ingress {
         from_port  = 6443
         to_port    = 6443
         rule_no    = 140
         action     = "allow"
         protocol   = "6"
         cidr_block = "${aws_subnet.orange-blue.cidr_block}"
+    }
+
+
+    ingress {
+        from_port  = 6443
+        to_port    = 6443
+        rule_no    = 141
+        action     = "allow"
+        protocol   = "6"
+        cidr_block = "${aws_subnet.red-blue.cidr_block}"
     }
 
     ingress {
@@ -76,6 +104,15 @@ resource "aws_network_acl" "kube-master" {
         cidr_block = "${aws_subnet.orange-blue.cidr_block}"
     }
 
+      ingress {
+        from_port  = 443
+        to_port    = 443
+        rule_no    = 156
+        action     = "allow"
+        protocol   = "6"
+        cidr_block = "${aws_subnet.red-blue.cidr_block}"
+    }
+
     ingress {
         from_port  = 8888
         to_port    = 8888
@@ -83,6 +120,16 @@ resource "aws_network_acl" "kube-master" {
         action     = "allow"
         protocol   = "6"
         cidr_block = "${aws_subnet.orange-blue.cidr_block}"
+    }
+
+
+    ingress {
+        from_port  = 8888
+        to_port    = 8888
+        rule_no    = 161
+        action     = "allow"
+        protocol   = "6"
+        cidr_block = "${aws_subnet.red-blue.cidr_block}"
     }
 
     ingress {
@@ -104,12 +151,30 @@ resource "aws_network_acl" "kube-master" {
     }
 
     ingress {
+        from_port  = 32768
+        to_port    = 65535
+        rule_no    = 211
+        action     = "allow"
+        protocol   = "6"
+        cidr_block = "${aws_subnet.red-blue.cidr_block}"
+    }
+
+    ingress {
         from_port  = 0
         to_port    = 0
         rule_no    = 220
         action     = "allow"
         protocol   = "4"
         cidr_block = "${aws_subnet.orange-blue.cidr_block}"
+    }
+
+    ingress {
+        from_port  = 0
+        to_port    = 0
+        rule_no    = 221
+        action     = "allow"
+        protocol   = "4"
+        cidr_block = "${aws_subnet.red-blue.cidr_block}"
     }
 
     egress {
@@ -133,6 +198,15 @@ resource "aws_network_acl" "kube-master" {
     }
 
     egress {
+        from_port  = 22
+        to_port    = 22
+        rule_no    = 111
+        action     = "allow"
+        protocol   = "6"
+        cidr_block = "${aws_subnet.red-blue.cidr_block}"
+    }
+
+    egress {
         from_port  = 80
         to_port    = 80
         rule_no    = 120
@@ -148,6 +222,15 @@ resource "aws_network_acl" "kube-master" {
         action     = "allow"
         protocol   = "6"
         cidr_block = "${aws_subnet.orange-blue.cidr_block}"
+    }
+
+    egress {
+        from_port  = 179
+        to_port    = 179
+        rule_no    = 131
+        action     = "allow"
+        protocol   = "6"
+        cidr_block = "${aws_subnet.red-blue.cidr_block}"
     }
 
     egress {
@@ -169,6 +252,15 @@ resource "aws_network_acl" "kube-master" {
     }
 
     egress {
+        from_port  = 10250
+        to_port    = 10250
+        rule_no    = 151
+        action     = "allow"
+        protocol   = "6"
+        cidr_block = "${aws_subnet.red-blue.cidr_block}"
+    }
+
+    egress {
         from_port  = 1024
         to_port    = 65535
         rule_no    = 160
@@ -187,12 +279,30 @@ resource "aws_network_acl" "kube-master" {
     }
 
     egress {
+        from_port  = 1024
+        to_port    = 65535
+        rule_no    = 166
+        action     = "allow"
+        protocol   = "6"
+        cidr_block = "${aws_subnet.red-blue.cidr_block}"
+    }
+
+    egress {
         from_port  = 32768
         to_port    = 65535
         rule_no    = 200
         action     = "allow"
         protocol   = "6"
         cidr_block = "${aws_subnet.orange-blue.cidr_block}"
+    }
+
+    egress {
+        from_port  = 32768
+        to_port    = 65535
+        rule_no    = 201
+        action     = "allow"
+        protocol   = "6"
+        cidr_block = "${aws_subnet.red-blue.cidr_block}"
     }
 
     egress {
@@ -211,6 +321,15 @@ resource "aws_network_acl" "kube-master" {
         action     = "allow"
         protocol   = "4"
         cidr_block = "${aws_subnet.orange-blue.cidr_block}"
+    }
+
+    egress {
+        from_port  = 0
+        to_port    = 0
+        rule_no    = 221
+        action     = "allow"
+        protocol   = "4"
+        cidr_block = "${aws_subnet.red-blue.cidr_block}"
     }
 
     tags {
@@ -477,6 +596,60 @@ resource "aws_network_acl" "kube-node" {
 
     tags {
         "Name" = "kube-node"
+        "kpn" = "itv"
+    }
+}
+
+resource "aws_network_acl" "red" {
+    vpc_id     = "${aws_vpc.prod.id}"
+    subnet_ids = ["${aws_subnet.red-prod.id}"]
+
+    ingress {
+        from_port  = 0
+        to_port    = 0
+        rule_no    = 100
+        action     = "allow"
+        protocol   = "-1"
+        cidr_block = "${aws_subnet.orange-prod.cidr_block}"
+    }
+
+    egress {
+        from_port  = 0
+        to_port    = 0
+        rule_no    = 100
+        action     = "allow"
+        protocol   = "-1"
+        cidr_block = "${aws_subnet.orange-prod.cidr_block}"
+    }
+    tags {
+        "Name" = "red"
+        "kpn" = "itv"
+    }
+}
+
+resource "aws_network_acl" "orange" {
+    vpc_id     = "${aws_vpc.prod.id}"
+    subnet_ids = ["${aws_subnet.orange-prod.id}"]
+
+    ingress {
+        from_port  = 0
+        to_port    = 0
+        rule_no    = 100
+        action     = "allow"
+        protocol   = "-1"
+        cidr_block = "${aws_subnet.red-prod.cidr_block}"
+    }
+
+    egress {
+        from_port  = 0
+        to_port    = 0
+        rule_no    = 100
+        action     = "allow"
+        protocol   = "-1"
+        cidr_block = "${aws_subnet.red-prod.cidr_block}"
+    }
+    tags {
+        "Name" = "orange"
         "kpn" = "itv"
     }
 }
