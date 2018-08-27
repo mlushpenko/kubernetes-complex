@@ -82,6 +82,14 @@ resource "aws_instance" "master" {
     }
 }
 
+data "template_file" "user_data_kube_worker" {
+  template = "${file("ec2_user_data/worker.sh")}"
+
+  vars {
+    proxy_ip   = "${aws_instance.proxy.private_ip}"
+  }
+}
+
 resource "aws_network_interface" "blue" {
     subnet_id         = "${aws_subnet.orange-blue.id}"
     security_groups   = ["${aws_security_group.basic-prod.id}", "${aws_security_group.kube-node.id}"]
@@ -104,14 +112,6 @@ resource "aws_network_interface" "prod" {
         "kpn"  = "itv"
         "prod-zone" = "orange"
     }
-}
-
-data "template_file" "user_data_kube_worker" {
-  template = "${file("ec2_user_data/worker.sh")}"
-
-  vars {
-    proxy_ip   = "${aws_instance.proxy.private_ip}"
-  }
 }
 
 resource "aws_instance" "worker" {
@@ -144,5 +144,62 @@ resource "aws_instance" "worker" {
         "Name" = "worker${count.index}"
         "kpn" = "itv"
         "prod-zone" = "orange"
+    }
+}
+
+resource "aws_network_interface" "red-blue" {
+    subnet_id         = "${aws_subnet.red-blue.id}"
+    security_groups   = ["${aws_security_group.basic-prod.id}", "${aws_security_group.kube-node.id}"]
+    source_dest_check = false
+    count = "1"
+    tags {
+        "Name" = "worker${count.index}-red-blue"
+        "kpn"  = "itv"
+        "prod-zone" = "red"
+    }
+}
+
+resource "aws_network_interface" "red-prod" {
+    subnet_id         = "${aws_subnet.red-prod.id}"
+    security_groups   = ["${aws_security_group.basic-prod.id}"]
+    source_dest_check = false
+    count = "1"
+    tags {
+        "Name" = "worker${count.index}-red-prod"
+        "kpn"  = "itv"
+        "prod-zone" = "red"
+    }
+}
+
+resource "aws_instance" "worker-red" {
+    ami                         = "ami-7c491f05"
+    ebs_optimized               = false
+    instance_type               = "t2.medium"
+    monitoring                  = false
+    key_name                    = "itv"
+    user_data                   = "${data.template_file.user_data_kube_worker.rendered}"
+
+    count = "1"
+
+    root_block_device {
+        volume_type           = "gp2"
+        volume_size           = 10
+        delete_on_termination = true
+    }
+
+    network_interface {
+        network_interface_id = "${aws_network_interface.red-blue.id}"
+        device_index = 0
+    }
+
+    network_interface {
+        network_interface_id = "${aws_network_interface.red-prod.id}"
+        device_index = 1
+    }
+
+    tags {
+        "Name" = "worker${count.index}-red"
+        "kpn" = "itv"
+        "prod-zone" = "red"
     }
 }
