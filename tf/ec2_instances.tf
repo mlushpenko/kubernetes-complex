@@ -17,7 +17,6 @@ resource "aws_instance" "stepping-stone" {
     subnet_id                   = "${aws_subnet.blue-red.id}"
     vpc_security_group_ids      = ["${aws_security_group.basic-blue.id}"]
     associate_public_ip_address = true
-    private_ip                  = "30.0.10.41"
     source_dest_check           = true
 
     root_block_device {

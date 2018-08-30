@@ -1,6 +1,6 @@
 resource "aws_subnet" "lb-backup" {
     vpc_id                  = "${aws_vpc.blue.id}"
-    cidr_block              = "30.0.48.0/20"
+    cidr_block              = "10.0.48.0/20"
     map_public_ip_on_launch = false
 
     tags {
@@ -11,7 +11,7 @@ resource "aws_subnet" "lb-backup" {
 
 resource "aws_subnet" "blue-red" {
     vpc_id                  = "${aws_vpc.blue.id}"
-    cidr_block              = "30.0.0.0/20"
+    cidr_block              = "10.0.0.0/20"
     map_public_ip_on_launch = false
 
     tags {
@@ -22,7 +22,7 @@ resource "aws_subnet" "blue-red" {
 
 resource "aws_subnet" "blue-orange" {
     vpc_id                  = "${aws_vpc.blue.id}"
-    cidr_block              = "30.0.16.0/20"
+    cidr_block              = "10.0.16.0/20"
     map_public_ip_on_launch = false
 
     tags {
@@ -33,7 +33,7 @@ resource "aws_subnet" "blue-orange" {
 
 resource "aws_subnet" "blue-green" {
     vpc_id                  = "${aws_vpc.blue.id}"
-    cidr_block              = "30.0.32.0/20"
+    cidr_block              = "10.0.32.0/20"
     map_public_ip_on_launch = false
 
     tags {
@@ -44,7 +44,7 @@ resource "aws_subnet" "blue-green" {
 
 resource "aws_subnet" "red-blue" {
     vpc_id                  = "${aws_vpc.prod.id}"
-    cidr_block              = "20.0.0.0/20"
+    cidr_block              = "10.20.0.0/20"
     map_public_ip_on_launch = false
 
     tags {
@@ -55,7 +55,7 @@ resource "aws_subnet" "red-blue" {
 
 resource "aws_subnet" "orange-blue" {
     vpc_id                  = "${aws_vpc.prod.id}"
-    cidr_block              = "20.0.16.0/20"
+    cidr_block              = "10.20.16.0/20"
     map_public_ip_on_launch = false
 
     tags {
@@ -66,7 +66,7 @@ resource "aws_subnet" "orange-blue" {
 
 resource "aws_subnet" "green-blue" {
     vpc_id                  = "${aws_vpc.prod.id}"
-    cidr_block              = "20.0.32.0/20"
+    cidr_block              = "10.20.32.0/20"
     map_public_ip_on_launch = false
 
     tags {
@@ -77,7 +77,7 @@ resource "aws_subnet" "green-blue" {
 
 resource "aws_subnet" "red-prod" {
     vpc_id                  = "${aws_vpc.prod.id}"
-    cidr_block              = "20.0.48.0/20"
+    cidr_block              = "10.20.48.0/20"
     map_public_ip_on_launch = false
     availability_zone       = "${aws_subnet.red-blue.availability_zone}"
 
@@ -89,7 +89,7 @@ resource "aws_subnet" "red-prod" {
 
 resource "aws_subnet" "orange-prod" {
     vpc_id                  = "${aws_vpc.prod.id}"
-    cidr_block              = "20.0.64.0/20"
+    cidr_block              = "10.20.64.0/20"
     map_public_ip_on_launch = false
     availability_zone       = "${aws_subnet.orange-blue.availability_zone}"
 
@@ -101,7 +101,7 @@ resource "aws_subnet" "orange-prod" {
 
 resource "aws_subnet" "green-prod" {
     vpc_id                  = "${aws_vpc.prod.id}"
-    cidr_block              = "20.0.80.0/20"
+    cidr_block              = "10.20.80.0/20"
     map_public_ip_on_launch = false
     availability_zone       = "${aws_subnet.green-blue.availability_zone}"
     tags {
