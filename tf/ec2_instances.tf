@@ -9,7 +9,7 @@ resource "aws_eip" "stepping-stone" {
 }
 
 resource "aws_instance" "stepping-stone" {
-    ami                         = "ami-2a7d75c0"
+    ami                         = "${lookup(var.amis, var.mgmt_os)}"
     ebs_optimized               = false
     instance_type               = "t2.nano"
     monitoring                  = false
@@ -32,7 +32,7 @@ resource "aws_instance" "stepping-stone" {
 }
 
 resource "aws_instance" "proxy" {
-    ami                         = "ami-2a7d75c0"
+    ami                         = "${lookup(var.amis, var.mgmt_os)}"
     ebs_optimized               = false
     instance_type               = "t2.small"
     monitoring                  = false
@@ -57,7 +57,7 @@ resource "aws_instance" "proxy" {
 }
 
 resource "aws_instance" "master" {
-    ami                         = "ami-7c491f05"
+    ami                         = "${lookup(var.amis, var.k8s_os)}"
     ebs_optimized               = false
     instance_type               = "t2.medium"
     monitoring                  = false
@@ -114,7 +114,7 @@ resource "aws_network_interface" "prod" {
 }
 
 resource "aws_instance" "worker" {
-    ami                         = "ami-7c491f05"
+    ami                         = "${lookup(var.amis, var.k8s_os)}"
     ebs_optimized               = false
     instance_type               = "t2.medium"
     monitoring                  = false
@@ -171,7 +171,7 @@ resource "aws_network_interface" "red-prod" {
 }
 
 resource "aws_instance" "worker-red" {
-    ami                         = "ami-7c491f05"
+    ami                         = "${lookup(var.amis, var.k8s_os)}"
     ebs_optimized               = false
     instance_type               = "t2.medium"
     monitoring                  = false
