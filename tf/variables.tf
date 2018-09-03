@@ -15,7 +15,6 @@ variable "k8s_os" {
 }
 
 variable "amis" {
-  type "map"
   default = {
     "ubuntu16.04" = "ami-0181f8d9b6f098ec4"
     "rhel7.5"     = "ami-7c491f05"
